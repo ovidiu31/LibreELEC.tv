@@ -6,6 +6,7 @@ This project is for Rockchip SoC devices
 
 * [ASUS Tinker Board](devices/TinkerBoard)
 * [PINE64 ROCK64](devices/ROCK64)
+* [RK3328](devices/RK3328)
 
 ## Links
 
