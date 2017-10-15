@@ -62,6 +62,13 @@ case "$LINUX" in
     PKG_SOURCE_DIR="xbian-sources-kernel-${PKG_COMMIT}*"   
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan irqbalanced"
     ;;
+  rockchip-4.4)
+    PKG_VERSION="e7942c88"
+    PKG_SHA256="9920c0871ea92aafa620bed95062cfe28344f27c77ae265ebc7efaec079dac25"
+    PKG_URL="https://github.com/rockchip-linux/kernel/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="kernel-$PKG_VERSION*"
+    PKG_PATCH_DIRS="rockchip-4.4"
+    ;;
   *)
     PKG_VERSION="4.13.6"
     PKG_SHA256="47d419ceae1d353dad565b858301ac9670c747deb37936c8a935915b3bdd6050"
@@ -221,6 +228,9 @@ makeinstall_target() {
   if [ "$BOOTLOADER" = "u-boot" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
     for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb; do
+      cp $dtb $INSTALL/usr/share/bootloader 2>/dev/null || :
+    done
+    for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
       cp $dtb $INSTALL/usr/share/bootloader 2>/dev/null || :
     done
     if [ -d arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic -a -f "arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/$KERNEL_UBOOT_EXTRA_TARGET" ]; then
