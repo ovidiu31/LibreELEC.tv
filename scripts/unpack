@@ -73,6 +73,12 @@ if [ -d "$SOURCES/$1" -o -d "$PKG_DIR/sources" ]; then
 
   . $PKG_DIR/package.mk
 
+  if [ "$PKG_IS_KERNEL_PKG" = "yes" ]; then
+    if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
+      TARGET_PREFIX=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-
+    fi
+  fi
+
   if [ "$(type -t pre_unpack)" = "function" ]; then
     pre_unpack
   fi
